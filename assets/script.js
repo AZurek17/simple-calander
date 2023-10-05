@@ -1,69 +1,70 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
+// the code isn"t run until the browser has finished rendering all the elements
 // in the html.
+
 function currentTime(){
    var today = dayjs();
-  $('#currentDay').text(today.format('MM/DD/YYYY'));
+  $("#currentDay").text(today.format("dddd, MMMM DD YYYY"));
 }
 currentTime();
 
-var mainContainer = $('#container');
-var businessHours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
-var hourOfTheDay = dayjs().hour();
+var mainContainer = $("#container");
+var workHours = [9, 10, 11, 12, 13, 14, 15, 16, 17];
+var currentHour = dayjs().hour();
 
 $(function () {
 
-  /** example of time block 
-   * 
-   <div id="hour-10" class="row time-block present">
-        <div class="col-2 col-md-1 hour text-center py-3">10AM</div>
-        <textarea class="col-8 col-md-10 description" rows="3"> </textarea>
-        <button class="btn saveBtn col-2 col-md-1" aria-label="save">
-          <i class="fas fa-save" aria-hidden="true"></i>
-        </button>
-      </div>
-  */
-     
-  for (var i = 0; i < businessHours.length; i++) {
+  for (var i = 0; i < workHours.length; i++) {
 
-    var americanHours = `${businessHours[i]} a.m.`;
-    if(businessHours[i] > 11){
-      americanHours = `${businessHours[i]} p.m.`;
-      if(businessHours[i] > 12)  americanHours = `${businessHours[i] - 12} p.m.`;
+    var hours = `${workHours[i]} a.m.`;
+    if(workHours[i] > 11){
+      hours = `${workHours[i]} p.m.`;
+      if(workHours[i] > 12)  hours = `${workHours[i] - 12} p.m.`;
     }
 
-    var parentDiv = $('<div>');
-    parentDiv.attr('id', `hour-${businessHours[i]}`);
-    parentDiv.addClass('row time-block');
-    if(hourOfTheDay < businessHours[i])parentDiv.addClass('future');
-    if(hourOfTheDay === businessHours[i])parentDiv.addClass('present');
-    if(hourOfTheDay > businessHours[i]){parentDiv.addClass('past');}// add disable text 
+    var parentDiv = $("<div>");
+    parentDiv.attr("id", `hour-${workHours[i]}`);
+    parentDiv.addClass("row time-block");
+    if(currentHour < workHours[i])parentDiv.addClass("future");
+    if(currentHour === workHours[i])parentDiv.addClass("present");
+    if(currentHour > workHours[i]){parentDiv.addClass("past");}
 
-    var hourDiv = $('<div>');
-    hourDiv.addClass('col-2 col-md-1 hour text-center py-3');
-    hourDiv.text(americanHours);
+    if(currentHour > workHours[i]){parentDiv.attr("id", `hour-${workHours[i]}, past`);}
 
-    var textArea = $('<textarea>');
-    textArea.addClass('col-8 col-md-10 description');
-    textArea.attr('id', `textArea-${i}`);
-
-    var saveBtn = $('<button>');
-    saveBtn.addClass('btn saveBtn col-2 col-md-1');
-    saveBtn.attr('aria-label', 'save');
-
-    var btnIcon = $('<i>');
-    btnIcon.addClass('fas fa-save');
-    btnIcon.attr('aria-hidden', 'true');
-
+    //if (currentHour > workHours[i])
     
-    
+    var hourDiv = $("<div>");
+    hourDiv.addClass("col-2 col-md-1 hour text-center py-3");
+    hourDiv.text(hours);
+
+    var textArea = $("<textarea>");
+    textArea.addClass("col-8 col-md-10 description");
+    textArea.attr("id", `textArea-${i}`);
+  
+
+    var saveBtn = $("<button>");
+    saveBtn.addClass("btn saveBtn col-2 col-md-1");
+    saveBtn.attr("aria-label", "save");
+
+    var btnIcon = $("<i>");
+    btnIcon.addClass("fas fa-save");
+    btnIcon.attr("aria-hidden", "true");
+
     saveBtn.append(btnIcon);
     parentDiv.append(hourDiv, textArea, saveBtn);
     mainContainer.append(parentDiv);
 
-
+    // var past = document.querySelector("#past");
+    // past.addEventListener("click", function(event){
+    //   var element = event.target;
+    //   if (element.matches("#past")) {
+    //   saveBtn.prop("disabled", true);
+    //   textArea.prop("disabled", true);
+    //   } })
+    
   }
-     
+  
+
 
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
@@ -114,3 +115,11 @@ $(function () {
 // 1 object per time slot / or 1 that encompasses all of them / 
 
 });
+
+
+
+
+
+
+
+
