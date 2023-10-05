@@ -4,13 +4,15 @@
 
 function currentTime(){
    var today = dayjs();
-  $("#currentDay").text(today.format("dddd, MMMM DD YYYY"));
+  $("#currentDay").text(today.format("dddd - MMMM DD, YYYY"));
 }
 currentTime();
+
 
 var mainContainer = $("#container");
 var workHours = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
 var currentHour = dayjs().hour();
+
 
 $(function () {
 
@@ -59,13 +61,12 @@ $(function () {
     
 
 
-  var saveText = document.querySelector(`saveText-${i}`);
-
-  saveText.addEventListener("click", function(event){
-    event.preventDefault();
-  //   var daySave = "textArea.textContent";
-  localStorage.setItem("dayHour", daySave);
-  })
+    
+    //var saveText = document.querySelector(`#saveText-${i}`);
+    // saveText.on("click", function(){
+    // var daySave = "textArea.textContent";
+    // localStorage.setItem("dayHour", daySave);
+    //})
   
     
   }
