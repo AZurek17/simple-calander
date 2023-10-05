@@ -1,7 +1,70 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
+function currentTime(){
+   var today = dayjs();
+  $('#currentDay').text(today.format('MM/DD/YYYY'));
+}
+currentTime();
+
+var mainContainer = $('#container');
+var businessHours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+var hourOfTheDay = dayjs().hour();
+
 $(function () {
+
+  /** example of time block 
+   * 
+   <div id="hour-10" class="row time-block present">
+        <div class="col-2 col-md-1 hour text-center py-3">10AM</div>
+        <textarea class="col-8 col-md-10 description" rows="3"> </textarea>
+        <button class="btn saveBtn col-2 col-md-1" aria-label="save">
+          <i class="fas fa-save" aria-hidden="true"></i>
+        </button>
+      </div>
+  */
+     
+  for (var i = 0; i < businessHours.length; i++) {
+
+    var americanHours = `${businessHours[i]} a.m.`;
+    if(businessHours[i] > 11){
+      americanHours = `${businessHours[i]} p.m.`;
+      if(businessHours[i] > 12)  americanHours = `${businessHours[i] - 12} p.m.`;
+    }
+
+    var parentDiv = $('<div>');
+    parentDiv.attr('id', `hour-${businessHours[i]}`);
+    parentDiv.addClass('row time-block');
+    if(hourOfTheDay < businessHours[i])parentDiv.addClass('future');
+    if(hourOfTheDay === businessHours[i])parentDiv.addClass('present');
+    if(hourOfTheDay > businessHours[i]){parentDiv.addClass('past');}// add disable text 
+
+    var hourDiv = $('<div>');
+    hourDiv.addClass('col-2 col-md-1 hour text-center py-3');
+    hourDiv.text(americanHours);
+
+    var textArea = $('<textarea>');
+    textArea.addClass('col-8 col-md-10 description');
+    textArea.attr('id', `textArea-${i}`);
+
+    var saveBtn = $('<button>');
+    saveBtn.addClass('btn saveBtn col-2 col-md-1');
+    saveBtn.attr('aria-label', 'save');
+
+    var btnIcon = $('<i>');
+    btnIcon.addClass('fas fa-save');
+    btnIcon.attr('aria-hidden', 'true');
+
+    
+    
+    saveBtn.append(btnIcon);
+    parentDiv.append(hourDiv, textArea, saveBtn);
+    mainContainer.append(parentDiv);
+
+
+  }
+     
+
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
