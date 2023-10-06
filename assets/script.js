@@ -10,7 +10,7 @@ currentTime();
 
 
 var mainContainer = $("#container");
-var workHours = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
+var workHours = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
 var currentHour = dayjs().hour();
 
 
@@ -29,9 +29,11 @@ $(function () {
     parentDiv.addClass("row time-block");
     if(currentHour < workHours[i])parentDiv.addClass("future");
     if(currentHour === workHours[i])parentDiv.addClass("present");
-    if(currentHour > workHours[i]){parentDiv.addClass("past");}
-
-    if(currentHour > workHours[i]){parentDiv.attr("id", `hour-${workHours[i]}, past`);}
+    if(currentHour > workHours[i])parentDiv.addClass("past");
+    
+    
+    
+    //if(currentHour > workHours[i]){parentDiv.attr("id", `hour-${workHours[i]}, past`);}
 
     //if (currentHour > workHours[i])
     
@@ -46,7 +48,8 @@ $(function () {
     var saveBtn = $("<button>");
     saveBtn.addClass("btn saveBtn col-2 col-md-1");
     saveBtn.attr("aria-label", "save");
-    saveBtn.attr("id", `saveText-${i}`);
+
+    saveBtn.attr("id", `saveText-${i}`);//////////////////////////////
 
     var btnIcon = $("<i>");
     btnIcon.addClass("fas fa-save");
@@ -57,92 +60,36 @@ $(function () {
     parentDiv.append(hourDiv, textArea, saveBtn);
     mainContainer.append(parentDiv);
 
-
+    function showOutput() {
+      var userOutput = localStorage.getItem("id", `textArea-${i}`);
+    }
     
 
+    $(".saveBtn").on("click", function (){
+      var hourSaved = $(this).parent().attr("id");
+      var userInput =$(this).siblings(".description").val();
+      console.log(localStorage);
+      //localStorage.setItem(hourSaved, userInput);
+      //localStorage.getItem(hourSaved)
+      showOutput()
+      
+      //console.log(userOutput);
+    });
+   
 
-    
-    //var saveText = document.querySelector(`#saveText-${i}`);
-    // saveText.on("click", function(){
-    // var daySave = "textArea.textContent";
-    // localStorage.setItem("dayHour", daySave);
-    //})
+
+    // userInput = ("id", `textArea-${i}`).text();
+    // localStorage.setItem(hourData, JSON.stringify(userInput));
+    // localStorage.getItemItem(hourData);
   
+    //var userOutput = JSON.parse(localStorage.getItem(userInput))
+    //console.log(userOutput);
+    //var userInput = (localStorage.getItem("id", `textArea-${i}`).innerHTML);
+    //console.log(userInput);
+  
+    
     
   }
-  
-  
-    
-
-    //var disableBtn = document.getElementsByClassName("row time-block past");
-
-
-
-
-
-    // function hourSaved(){
-    //   var saveText = localStorage.getitem("#`textArea-${i}`");
-    //   saveText.textContent = savedText;
-    // }
-
-    // saveBtn.addEventListener("click", function(event) {
-    
-    // localStorage.setItem("#`textArea-${i}`", savedText);
-    // hourSaved();})
-
-
-  //   var element = event.target;
-  // if (element.matches("#past")) {
-  // saveBtn.prop("disabled", true);
-  // textArea.prop("disabled", true);
-
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
-  
-
-  // Pseudo:
-// make multiple timeblocks
-// rename timeblocks accordingly with standard work hours
-// global event listener to make sure clicking on the save button
-// use event target, to traverse the DOM
-// the save button is to save input into the timeblock into local storage
-//   
-
-
-  // TODO: Add code to apply the past, present, or future class to each time
-  // block by comparing the id to the current hour. HINTS: How can the id
-  // attribute of each time-block be used to conditionally add or remove the
-  // past, present, and future classes? How can Day.js be used to get the
-  // current hour in 24-hour time?
-
-
-       // Pseudo:
-// declare current time for callback as a variable
-// create an array and place DOM nodes in the array / DOM node: grabs an element on the page.
-// Use loop to iterate through array to compare to current date/time using dayjs()
-// assign past, present, and future classes
-// 
-
-
-
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
-
-  // Pseudo:
-// Grab information from local storage, in correspondence to the time of the day/ locate the appropriate timeblock and set value of input/textarea to the corresponding data to that timeblock
-// 
-
-  // TODO: Add code to display the current date in the header of the page.
-
-  // Pseudo:
-// make a variable that is for the current day with dayjs
-// set all dates in currentDate to variable of dayjs()
-// 1 object per time slot / or 1 that encompasses all of them / 
 
 });
 
